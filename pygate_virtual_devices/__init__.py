@@ -10,8 +10,8 @@ import logging
 logger = logging.getLogger('virtual devices')
 from apscheduler.schedulers.background import BackgroundScheduler
 
-from core.gateway import Gateway
-from core import config
+from pygate_core.gateway import Gateway
+from pygate_core import config
 from virtualDevice import VirtualDevice
 
 gateway = None
