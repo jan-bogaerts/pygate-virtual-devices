@@ -11,7 +11,8 @@
 	"data sources" : [{
 			"name" : "data",
 			"uri" : "http://api.worldweatheronline.com/free/v1/weather.ashx?q={{location}}&format=json&num_of_days=5&key=741d5a6a86a1fd53579a9b2183664a67a7d78582",
-			"method" : "get"
+			"method" : "get",
+			"response": 200
 		}
 	],
 	"queries" : [
@@ -87,57 +88,68 @@
 	"values" : [
 		{
 			"asset" : "temperature",
+			"label" : "temperature",
 			"type" : "number",
 			"value": {"query": "temperature"}
 		},
 		{
 			"asset" : "cloudcover",
+			"label" : "cloudcover",
 			"type" : "number",
 			"value": {"query": "cloudcover"}
 		},
 		{
 			"asset" : "humidity",
+			"label" : "humidity",
 			"type" : "number",
 			"value": {"query": "humidity"}
 		},
 		{
 			"asset" : "pressure",
+			"label" : "pressure",
 			"type" : "number",
 			"value": {"query": "pressure"}
 		},
 		{
 			"asset" : "visibility",
+			"label" : "visibility",
 			"type" : "number",
 			"value": {"query": "visibility"}
 		},
 		{
-			"asset" : "weather description",
+			"asset" : "weather_description",
+			"label" : "weather description",
 			"type" : "string",
 			"value": {"query": "weather description"}
 		},
 		{
-			"asset" : "weather icon",
+			"asset" : "weather_icon",
+			"label" : "weather icon",
 			"type" : "string",
 			"value": {"query": "weather icon"}
 		},
 		{
-			"asset" : "wind direction",
+			"asset" : "wind_direction",
+			"label" : "wind direction",
 			"type" : "string",
 			"value": {"query": "wind direction"}
 		},
 		{
-			"asset" : "wind speed (kmh)",
-			"type" : "number",
+			"asset" : "wind_speed",
+			"label" : "wind speed (kmh)",
+			"type" : {"type": "number", "unit": "km/h"},
 			"value": {"query": "wind speed"}
 		},
 		{
 			"asset" : "precipMM",
+			"label" : "precipMM",
 			"type" : "number",
 			"value": {"query": "precipMM"}
 		},
 		{
 			"asset": "tomorow",
-			"type":{"title": "weather forecast",
+			"label": "tomorow",
+			"type":{
 					"type": "object",
 					"properties": {
 						"temp-max": {"type": "number"},
@@ -150,16 +162,17 @@
 					},
 					"required": ["temp-max", "temp-min", "precipMM", "wind direction", "wind speed"]
 				   },
-			"asset": {"object":
-			{
-				"temp-max": {"query": "tomorow-temp-max"},
-				"temp-min": {"query": "tomorow-temp-min"},
-				"precipMM": {"query": "tomorow-precipMM"},
-				"weather description": {"query": "tomorow-weather description"},
-				"weather icon": {"query": "tomorow-weather icon"},
-				"wind direction": {"query": "tomorow-wind direction"},
-				"wind speed": {"query": "tomorow-wind speed"} }
-			}
+			"value": {"object":
+						{
+							"temp-max": {"query": "tomorow-temp-max"},
+							"temp-min": {"query": "tomorow-temp-min"},
+							"precipMM": {"query": "tomorow-precipMM"},
+							"weather description": {"query": "tomorow-weather description"},
+							"weather icon": {"query": "tomorow-weather icon"},
+							"wind direction": {"query": "tomorow-wind direction"},
+							"wind speed": {"query": "tomorow-wind speed"}
+						}
+					}
 			
 		}
 	]

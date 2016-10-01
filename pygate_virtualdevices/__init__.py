@@ -26,7 +26,7 @@ def connectToGateway(moduleName):
         called when the system connects to the cloud.
     '''
     global gateway
-    gateway = Gateway(moduleName)
+    gateway = Gateway(moduleName)  # need to remove the "_" in the module name, otherwise we can't find the devices anymore related to this module.
 
 
 def syncGatewayAssets():
@@ -57,19 +57,21 @@ def syncDevices(existing, full=False):
                 device.updateDevice(gateway)
             existing.remove(found)
         else:
-            device.addDevice(gateway)
+            device.addDevice(gateway, definition['label'])
     for dev in existing:  # all the items that remain in the 'existing' list, are no longer devices in this network, so remove them
         gateway.deleteDevice(dev['id'])
+    gateway.send(definitions, None, virtualDevicesConfigId)
 
 def run():
     ''' optional
         main function of the plugin module'''
-    for key, device in devices:
+    for key, device in devices.iteritems():
         scheduleAt = device.refreshRate.split(':')
         if len(scheduleAt) != 3:
             logger.error("invalid time interval: {} in device: {}".format(scheduleAt, device.id))
         else:
-            scheduler.add_job(device.run, 'date', days=scheduleAt[0], hours=scheduleAt[1], minutes=scheduleAt[2], id=key, args=[gateway])
+            scheduler.add_job(device.run, 'interval', days=int(scheduleAt[0]), hours=int(scheduleAt[1]), minutes=int(scheduleAt[2]), id=key, args=[gateway])
+        device.run(gateway)                                         # run it 1 time at startup, to provide init values.
     scheduler.start()
 
 def stop():
