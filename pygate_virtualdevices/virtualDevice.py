@@ -122,7 +122,7 @@ class VirtualDevice(object):
                         ds['body'] = json.dumps(ds['body']).replace("{{" + key + "}}", value)
                 if 'headers' in ds:  # if there is a header section, also replace params
                     newHeaders = {}  # make a cpopy of the dict cause the keys can change as well.
-                    for header_key, header_value in ds['headers']:  # headers has to be a list.
+                    for header_key, header_value in ds['headers'].iteritems():  # headers has to be a dict.
                         for key, value in values:
                             header_key = header_key.replace("{{" + key + "}}", value)
                             header_value = header_value.replace("{{" + key + "}}", value)
