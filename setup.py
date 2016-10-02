@@ -8,5 +8,6 @@ setup(
     license='',
     author='Jan Bogaerts',
     author_email='jb@allthingstalk.com',
+	install_requires=["apscheduler", "futures", "funcsigs", "requests", "pygate_core"],
     description='plugin for the pygate: add virtual devices to the gateway such as online weather stations'
 )
