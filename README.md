@@ -85,13 +85,15 @@ ex:
 	- uri: the uri to query. This is a string that can contain references to variables. Each variable name has to be enclosed by 2 brackets. ex:  `"uri" : "http://api.worldweatheronline.com/free/v1/weather.ashx?q={{location}}&format=json&num_of_days=5&key={{key}}"`
 	- method: supported values: get, put, post, delete
 	- body: (optional) an optional body that has to be sent with the request. The body can also contain variable references like the uri.  ex:  
-```
-"body": {"value":"{{value}}"}
-```
+	```
+	"body": {"value":"{{value}}"}
+	```
+	
 	- headers: (optional): a dictionary of header name and value. Both name and value can contain references to variable values. ex:  
-```
-"headers": {"header1":"{{header1val}}", "{{header1name}}": "a value"}
-```
+	```
+	"headers": {"header1":"{{header1val}}", "{{header1name}}": "a value"}
+	```
+	
 	- response: (optional) a number that should be returned as response of the call to the uri. ex: 200
 
 
