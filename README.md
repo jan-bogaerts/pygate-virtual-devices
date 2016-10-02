@@ -83,7 +83,7 @@ variables: an array of variables that have to be supplied to the definition. Thi
 	- name: the name of the variable
 	- type: the data type of the variable. Currently supported: boolean, string, number (json types).  
 	ex:
-	```
+	```json
 	{"name" : "location",
 	 "type" : "string"
 	}
@@ -94,12 +94,12 @@ variables: an array of variables that have to be supplied to the definition. Thi
 	- uri: the uri to query. This is a string that can contain references to variables. Each variable name has to be enclosed by 2 brackets. ex:  `"uri" : "http://api.worldweatheronline.com/free/v1/weather.ashx?q={{location}}&format=json&num_of_days=5&key={{key}}"`
 	- method: supported values: get, put, post, delete
 	- body: (optional) an optional body that has to be sent with the request. The body can also contain variable references like the uri.  ex:  
-	```
+	```json
 	"body": {"value":"{{value}}"}
 	```
 	
 	- headers: (optional): a dictionary of header name and value. Both name and value can contain references to variable values. ex:  
-	```
+	```json
 	"headers": {"header1":"{{header1val}}", "{{header1name}}": "a value"}
 	```
 	
@@ -118,7 +118,7 @@ Each query should start with 'datasource[name of datasource]', followed by 1 or 
 `"value": {"query": "name of query"}`
 		- an object, which allows the creation of complex json objects . ex:
 
-	```
+	```json
 	"value": {"object":
 		{
 		"temp-max": {"query": "tomorow-temp-max"},
@@ -129,7 +129,7 @@ Each query should start with 'datasource[name of datasource]', followed by 1 or 
 
 A full example for a weather station:
 
-```
+```json
 {
 	"name" : "weather service",
 	"author" : "Jan bogaerts",
