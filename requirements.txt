@@ -1,2 +1,5 @@
 apscheduler
+futures
+funcsigs
+requests
 pygate_core
