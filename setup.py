@@ -3,7 +3,7 @@ from distutils.core import setup
 setup(
     name='pygate_virtual_devices',
     version='1.0',
-    packages=['pygate_virtual_devices'],
+    packages=['pygate_virtualdevices'],
     url='www.allthingstalk.com',
     license='',
     author='Jan Bogaerts',

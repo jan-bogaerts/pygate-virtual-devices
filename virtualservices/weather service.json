@@ -4,13 +4,16 @@
 	"refresh rate" : "0:4:0",
 	"variables" : [{
 			"name" : "location",
-			"type" : "string",
-			"scope" : "service"
+			"type" : "string"
+		},
+		{
+			"name" : "key",
+			"type" : "string"
 		}
 	],
 	"data sources" : [{
 			"name" : "data",
-			"uri" : "http://api.worldweatheronline.com/free/v1/weather.ashx?q={{location}}&format=json&num_of_days=5&key=741d5a6a86a1fd53579a9b2183664a67a7d78582",
+			"uri" : "http://api.worldweatheronline.com/free/v1/weather.ashx?q={{location}}&format=json&num_of_days=5&key={{key}}",
 			"method" : "get",
 			"response": 200
 		}
