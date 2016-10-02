@@ -73,13 +73,13 @@ ex: `"0:4:0"` -> the service will be queried every 4 hours.
 variables: an array of variables that have to be supplied to the definition. This maps to the field 'params' in the file 'virtualdevices.json'. The array contains a list of json objects, each containing the following fields:
 	- name: the name of the variable
 	- type: the data type of the variable. Currently supported: boolean, string, number (json types).  
-ex:
-```
-{
-			"name" : "location",
-			"type" : "string"
-		}
-```
+	ex:
+	```
+	{"name" : "location",
+	 "type" : "string"
+	}
+	```
+
 - data sources: this is a array of json objects. Each object defines an url endpoint that can be queried for this service. The following fields are used:
 	- name: the name of the data source. This is used in the 'queries' (see later) to find the resource who's result is used.
 	- uri: the uri to query. This is a string that can contain references to variables. Each variable name has to be enclosed by 2 brackets. ex:  `"uri" : "http://api.worldweatheronline.com/free/v1/weather.ashx?q={{location}}&format=json&num_of_days=5&key={{key}}"`
