@@ -62,6 +62,15 @@ Example:
 ]
 ```
 
+# currently available virtual device definitions:
+
+## weather station
+This is definition provides a virtual weather station, based on the services provided by [http://api.worldweatheronline.com/](http://www.worldweatheronline.com/). It provides detailed info on the current weather and for the expected weather for the next day. The data is refreshed every 4 hours.  
+The following parameters have to be supplied in order to activate the service:
+
+- location: the city or town to get weather info for. ex: Brussels
+- key: the key for api.worldweatheronline.com. It is your responsibility to set up an account with the service. They provide a key that can be used in the api calls. You have to provide it through this field.
+
 # virtual device definitions
 The actual api's that should be queried, are defined in 'virtual device definitions'. Such a definition is a json object that declares the api endpoint to call, optional parameters for the url, headers and or body and a way to translate the result of the api call into asset values.
 The definition should contain the following fields:
@@ -95,5 +104,93 @@ variables: an array of variables that have to be supplied to the definition. Thi
 	```
 	
 	- response: (optional) a number that should be returned as response of the call to the uri. ex: 200
+- queries: an array containing json objects that define all the queries that should be performed on the result data of the data sources, in order to retrieve the data values that have to be sent to the cloud as sensor values.  
+Each query definition should contain the following fields:
+	- name: the name of the query. This is used when composing the asset values, to reference the query result.
+	- value: a json query string that determins where to find the value for the query.  
+Each query should start with 'datasource[name of datasource]', followed by 1 or more [index] or .fieldname values. Ex:  `"value" : "datasource[data].data.current_condition[0].temp_C"`
+- values: a json array containing 1 or more objects that defines an asset that has to be created and updated for the virtual device. Each object should contain the following fields:
+	- asset: the name of the asset, used as identification (not visible to the user). This value has to be unique for the device and should only contain letters, digits, dashes or underscores (no spaces).
+	- label: the label for the asset, as shown to the user.
+	- type: a json schema object that defines the datatype and structure of the asset.
+	- value: defines how the value for the asset is constructed. The value for this field can be:
+		- a reference to a query, in the form: 
+`"value": {"query": "name of query"}`
+		- an object, which allows the creation of complex json objects . ex:
 
+	```
+	"value": {"object":
+		{
+		"temp-max": {"query": "tomorow-temp-max"},
+		"temp-min": {"query": "tomorow-temp-min"}
+		}
+	}
+	```
+
+A full example for a weather station:
+
+```
+{
+	"name" : "weather service",
+	"author" : "Jan bogaerts",
+	"refresh rate" : "0:4:0",
+	"variables" : [{
+			"name" : "location",
+			"type" : "string"
+		},
+		{
+			"name" : "key",
+			"type" : "string"
+		}
+	],
+	"data sources" : [{
+			"name" : "data",
+			"uri" : "http://api.worldweatheronline.com/free/v1/weather.ashx?q={{location}}&format=json&num_of_days=5&key={{key}}",
+			"method" : "get",
+			"response": 200
+		}
+	],
+	"queries" : [
+		{
+			"name" : "temperature",
+			"value" : "datasource[data].data.current_condition[0].temp_C"
+		}
+		{
+			"name" : "tomorow-temp-max",
+			"value" : "datasource[data].data.weather[1].tempMaxC"
+		},
+		{
+			"name" : "tomorow-temp-min",
+			"value" : "datasource[data].data.weather[1].tempMinC"
+		}
+	],
+	"values" : [
+		{
+			"asset" : "temperature",
+			"label" : "temperature",
+			"type" : "number",
+			"value": {"query": "temperature"}
+		},
+		{
+			"asset": "tomorow",
+			"label": "tomorow",
+			"type":{
+					"type": "object",
+					"properties": {
+						"temp-max": {"type": "number"},
+						"temp-min": {"type": "number"}
+					}
+				   },
+			"value": {"object":
+						{
+							"temp-max": {"query": "tomorow-temp-max"},
+							"temp-min": {"query": "tomorow-temp-min"}
+						}
+					}
+			
+		}
+	]
+}
+
+```
 
