@@ -13,7 +13,7 @@ and run `pip install -r requirements.txt` from within the pygate_virtualdevices 
 - install the virtual device definitions:
 	- copy the directory virtualdevices to the root directory of the pygate software
 
-#activate the plugin
+# activate the plugin
 the plugin must be activated in the pygate software before it can be used. This can be done manually or through the pygate interface.
 
 ## manually
@@ -21,10 +21,10 @@ Edit the configuration file 'pygate.conf' (located in the config dir).
 add 'virtualdevices' to the config line 'modules' in the general section of the 'pygate.conf' config file. ex:  
     
 	[general]  
-    modules = main; virtualdevices; liato
+    modules = main; virtualdevices; watchdog
 When done, restart the gateway.
 
-##pygate interface
+## pygate interface
 Use the actuator 'plugins' and add 'virtualdevices' to the list. After the command has been sent to the device, the gateway will reboot automatically.
 
 # configure available virtual devices
